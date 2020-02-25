@@ -305,7 +305,8 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                             type="number"
                             inputProps={{
 
-                                min: 0
+                                min: 0,
+                                maxLength: 3
                             }}
                             onChange={handleChange}
                             error={error.no_urutkel ? true : false}

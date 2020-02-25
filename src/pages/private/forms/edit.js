@@ -361,6 +361,7 @@ export default function EditForm() {
                         formIndex={formIndex}
                         mode="edit"
                         no_kk={params.no_kk}
+                        wilayah={wilayah}
                     />
 
                 }

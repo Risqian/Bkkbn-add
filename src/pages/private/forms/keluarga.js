@@ -38,7 +38,7 @@ import { countAge } from './pk/validation';
 
 export const formatString = "dd-MM-yyyy";
 
-function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex, mode, wilayah }) {
+function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, formIndex, mode }) {
     const classes = useStyles();
     const nextRef = useRef(null);
     const backRef = useRef(null);
@@ -298,7 +298,7 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
                     <Grid item xs={12}>
                         <Divider />
                     </Grid>
-                    <Grid item xs={12} md={2}>
+                    <Grid item xs={2} md={2}>
                         <TextField
                             disabled={isSubmitting}
                             fullWidth
@@ -313,7 +313,7 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
                             disabled
                         />
                     </Grid>
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={10} md={5}>
                         <TextField
                             disabled={isSubmitting}
                             fullWidth
@@ -479,10 +479,10 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
                                 {
                                     formIndex == 1 && <MenuItem value="1">Kepala Keluarga</MenuItem>
                                 }
-                                {
+                                {   
                                     formIndex > 1 &&
                                     itemHubungan.map((val, index) => {
-                                        return (<MenuItem value={index + 2}>{val}</MenuItem>)
+                                      return (<MenuItem value={index + 2}>{val}</MenuItem>)
                                     })
                                 }  */}
 

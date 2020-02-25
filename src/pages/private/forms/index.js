@@ -71,7 +71,7 @@ export default function Form() {
 
         }
     }, [wilayah.jumlah_keluarga])
-
+    
     const resetForm = () => {
         setSlide({
             direction: "right",

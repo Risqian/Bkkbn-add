@@ -106,7 +106,7 @@ export default function EditForm() {
                             usia_kawin: currKeluarga.usia_kawin ? lodashGet(currKeluarga, 'usia_kawin', '').toString() : '',
                             // sts_hubanak_ibu: currKeluarga.sts_hubanak_ibu ? lodashGet(currKeluarga, 'sts_hubanak_ibu', '').toString() : '',
                             kd_ibukandung: currKeluarga.kd_ibukandung ? lodashGet(currKeluarga, 'kd_ibukandung', '').toString() : '',
-                            keberadaan: currKeluarga.keberadaan.toString()
+                            keberadaan: currKeluarga.keberadaan ? lodashGet(currKeluarga, 'keberadaan', '').toString() : '',
                         }
 
 

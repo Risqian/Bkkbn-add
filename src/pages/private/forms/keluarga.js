@@ -38,7 +38,7 @@ import { countAge } from './pk/validation';
 
 export const formatString = "dd-MM-yyyy";
 
-function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex, mode, no_kk }) {
+function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex, mode, wilayah }) {
     const classes = useStyles();
     const nextRef = useRef(null);
     const backRef = useRef(null);
@@ -51,6 +51,8 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
     const [isSomethingChange, setSomethingChange] = useState(false);
 
     const [isSubmitting, setSubmitting] = useState(false);
+
+    const itemHubungan = ['istri', 'anak', 'lain-lain']
 
     //reset error
     useEffect(() => {
@@ -176,11 +178,11 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
         if (['2', '3', '4'].includes(selectedKeluarga.sts_kawin)) {
 
             if (!selectedKeluarga.usia_kawin) {
-                newError.usia_kawin = "Usia Kawin wajib diisi";
+                newError.usia_kawin = "Usia Kawin Pertama wajib diisi";
             } else if (parseInt(selectedKeluarga.usia_kawin) < 10) {
-                newError.usia_kawin = "Usia Kawin tidak boleh diisi < 10";
+                newError.usia_kawin = "Usia Kawin Pertama tidak boleh diisi < 10";
             } else if (selectedKeluarga.tgl_lahir && parseInt(selectedKeluarga.usia_kawin) >= countAge(selectedKeluarga.tgl_lahir)) {
-                newError.usia_kawin = "Usia Kawin tidak boleh lebih besar dari umur";
+                newError.usia_kawin = "Usia Kawin Pertama tidak boleh lebih besar dari umur";
             }
 
 
@@ -205,8 +207,10 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
             newError.id_pekerjaan = "Pekerjaan wajib diisi";
         }
 
-        if (!selectedKeluarga.keberadaan) {
-            newError.keberadaan = "Keberadaan Anggota Keluarga wajib diisi";
+        if (wilayah.jumlah_keluarga !== "1") {
+            if (!selectedKeluarga.keberadaan) {
+                newError.keberadaan = "Keberadaan Anggota Keluarga wajib diisi";
+            }
         }
 
         return newError;
@@ -471,13 +475,22 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
                                 name="sts_hubungan"
                                 displayEmpty
                             >
+                                {/* <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
+                                {
+                                    formIndex == 1 && <MenuItem value="1">Kepala Keluarga</MenuItem>
+                                }
+                                {
+                                    formIndex > 1 &&
+                                    itemHubungan.map((val, index) => {
+                                        return (<MenuItem value={index + 2}>{val}</MenuItem>)
+                                    })
+                                }  */}
+
                                 <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
                                 <MenuItem value="1">Kepala Keluarga</MenuItem>
                                 <MenuItem value="2">Istri</MenuItem>
                                 <MenuItem value="3">Anak</MenuItem>
                                 <MenuItem value="4">Lain-lain</MenuItem>
-
-
                             </Select>
                             <FormHelperText>{error.sts_hubungan}</FormHelperText>
                         </FormControl>
@@ -524,14 +537,14 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
 
                                 {
                                     Object.values(keluarga).map(kel => {
-                                        if(kel.sts_hubungan == "1" && kel.sts_kawin == "2" && kel.jenis_kelamin == "1")
-                                        return (
+                                        if (kel.sts_hubungan == "1" && kel.sts_kawin == "2" && kel.jenis_kelamin == "1")
+                                            return (
                                                 <MenuItem key={keluarga['02'].no_urutnik} value={keluarga['02'].no_urutnik}>{keluarga['02'].nama_anggotakel}</MenuItem>
                                             )
-                                            
-                                          if(  kel.sts_hubungan == "1" && kel.sts_kawin !== "2" && kel.jenis_kelamin == "2" )
-                                          return (<MenuItem key={keluarga['01'].no_urutnik} value={keluarga['01'].no_urutnik}>{keluarga['01'].nama_anggotakel}</MenuItem>)
-                                            
+
+                                        if (kel.sts_hubungan == "1" && kel.sts_kawin !== "2" && kel.jenis_kelamin == "2")
+                                            return (<MenuItem key={keluarga['01'].no_urutnik} value={keluarga['01'].no_urutnik}>{keluarga['01'].nama_anggotakel}</MenuItem>)
+
 
                                     })
                                 }
@@ -654,10 +667,11 @@ function Keluarga({ id, keluarga, setKeluarga, handleNext, handleBack, formIndex
 
                     <Grid item xs={12} md={4}>
                         <FormControl
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || wilayah.jumlah_keluarga === "1"}
                             variant="outlined" fullWidth error={error.keberadaan ? true : false}>
 
                             <Select
+                                disabled={isSubmitting || wilayah.jumlah_keluarga === "1"}
                                 id="keberadaan"
                                 value={selectedKeluarga.keberadaan || ''}
                                 onChange={handleChange}

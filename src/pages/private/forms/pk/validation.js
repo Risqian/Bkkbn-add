@@ -20,6 +20,19 @@ function haveChildren(keluarga) {
 
 }
 
+function haveChildrenWithSingelParent(keluarga) {
+
+    return keluarga.some((value) => {
+        // if (value.sts_hubungan === "3") {
+        //     if (value.sts_kawin === "3" || value.sts_kawin === "4") {
+        //         return true;
+        //     }
+        //     return false;
+        // }
+        return value.sts_hubungan === "3" && !(value.sts_kawin === "3" || value.sts_kawin === "4");
+    })
+
+}
 
 function haveWifeOrHusband(keluarga) {
     return keluarga.some((value) => {
@@ -141,6 +154,7 @@ export default {
     haveFamilyMember60,
     haveMarriedMember,
     haveChildrenFrom0To17,
+    haveChildrenWithSingelParent,
     PeopleInHome
 
 

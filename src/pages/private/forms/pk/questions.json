@@ -125,7 +125,7 @@
             "Tidak Berlaku"
         ],
         "dependencies": [
-            "haveChildren"
+            "haveChildrenWithSingelParent"
         ],
         "unit": "",
         "lain": false

@@ -217,6 +217,8 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
     }
 
+    const umurnikah= countAge(selectedKeluarga.tgl_lahir) + 1;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -436,7 +438,8 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             type="number"
                             inputProps={{
 
-                                min: 0
+                                min: 0,
+                                max: umurnikah
                             }}
                             onChange={handleChange}
                             error={error.usia_kawin ? true : false}
@@ -475,22 +478,22 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                                 name="sts_hubungan"
                                 displayEmpty
                             >
-                                {/* <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
+                                <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
                                 {
-                                    formIndex == 1 && <MenuItem value="1">Kepala Keluarga</MenuItem>
+                                    id === "01" && <MenuItem value="1">Kepala Keluarga</MenuItem>
                                 }
                                 {   
-                                    formIndex > 1 &&
+                                    id > "01" &&
                                     itemHubungan.map((val, index) => {
-                                      return (<MenuItem value={index + 2}>{val}</MenuItem>)
+                                      return (<MenuItem value={`${index + 2}`}>{val}</MenuItem>)
                                     })
-                                }  */}
+                                } 
 
-                                <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
+                                {/* <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
                                 <MenuItem value="1">Kepala Keluarga</MenuItem>
                                 <MenuItem value="2">Istri</MenuItem>
                                 <MenuItem value="3">Anak</MenuItem>
-                                <MenuItem value="4">Lain-lain</MenuItem>
+                                <MenuItem value="4">Lain-lain</MenuItem> */}
                             </Select>
                             <FormHelperText>{error.sts_hubungan}</FormHelperText>
                         </FormControl>

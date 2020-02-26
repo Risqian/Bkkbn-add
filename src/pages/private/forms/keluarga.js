@@ -54,6 +54,8 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
     const itemHubungan = ['istri', 'anak', 'lain-lain']
 
+    const itemKeberadaan = ['Di Dalam Rumah', 'Di Luar Rumah', 'Di Luar Negeri']
+
     //reset error
     useEffect(() => {
         setError({})
@@ -112,6 +114,17 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                 }
             })
 
+        }
+
+        if(id === "01" && wilayah.jumlah_keluarga === "1"){
+            setKeluarga({
+                ...keluarga,
+                [id]: {
+                    ...keluarga[id],
+                    ["sts_hubungan"]: "1",
+                    ["keberadaan"]: "1"
+                }
+            })
         }
 
 
@@ -699,7 +712,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             <Select
                                 id="jns_asuransi"
                                 value={selectedKeluarga.jns_asuransi || ''}
-                                onChange={handleChange}
+                                onChange={handleChangeStsAkta}
                                 name="jns_asuransi"
                                 displayEmpty
                             >
@@ -714,22 +727,33 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <FormControl
+                    <FormControl
                             disabled={isSubmitting || wilayah.jumlah_keluarga === "1"}
                             variant="outlined" fullWidth error={error.keberadaan ? true : false}>
 
                             <Select
                                 disabled={isSubmitting || wilayah.jumlah_keluarga === "1"}
                                 id="keberadaan"
-                                value={selectedKeluarga.keberadaan || ''}
+                                value={selectedKeluarga.keberadaan || (wilayah.jumlah_keluarga === "1" && "1") || ''}
                                 onChange={handleChange}
                                 name="keberadaan"
                                 displayEmpty
                             >
-                                <MenuItem value="">Keberadaan anggota keluarga</MenuItem>
+                                {/* <MenuItem value="">Keberadaan anggota keluarga</MenuItem>
                                 <MenuItem value="1">Di Dalam Rumah</MenuItem>
                                 <MenuItem value="2">Di Luar Rumah</MenuItem>
-                                <MenuItem value="3">Di Luar Negeri</MenuItem>
+                                <MenuItem value="3">Di Luar Negeri</MenuItem> */}
+
+                                <MenuItem value="">Keberadaan anggota keluarga</MenuItem>
+                                {
+                                    wilayah.jumlah_keluarga === "1" && <MenuItem value="1">Di Dalam Rumah</MenuItem>
+                                }
+                                {
+                                    wilayah.jumlah_keluarga > "1" &&
+                                    itemKeberadaan.map((val, index) => {
+                                        return (<MenuItem value={`${index + 1}`}>{val}</MenuItem>)
+                                    })
+                                }
 
 
                             </Select>

@@ -47,6 +47,10 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
 
     const [navigationMode, setNavigationMode] = useState('next');
 
+    // By Me
+    const [isSingle, setIsSingle] = useState(wilayah.jumlah_keluarga == "1");
+    //
+
 
 
     useEffect(() => {
@@ -72,6 +76,14 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
             return initialPK
         })
 
+        // By Me 
+        // Kondisi ketija satu rumah hanya terdiri 1 orang
+        if (isSingle) {
+            setPK(initialPK)
+            setNormalizePK(initialPK)
+            setSubFormIndex(16)
+        }
+        //
 
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,6 +118,14 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         if (subformIndex === 0) {
             return handleBack()
         }
+
+        // By Me
+        if (isSingle) {
+            if (subformIndex === 16) {
+                return handleBack()
+            }
+        }
+        //
 
         setNavigationMode('back')
         setSlide({
@@ -204,6 +224,15 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
     // subform aktif
     const form = subforms[no];
     const value = pk[no];
+
+    // By Me
+    if (isSingle) {
+        if (navigationMode === "back") {
+            handleBackSub()
+        }
+    }
+    //
+
     //console.log(form, value, pk)
     return (<>
         <Swipeable

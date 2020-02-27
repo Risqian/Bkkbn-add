@@ -578,11 +578,11 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                     </Grid> */}
                     <Grid item xs={12} md={4}>
                         <FormControl
-                            disabled={isSubmitting || selectedKeluarga.sts_hubungan == "3"}
+                            disabled={isSubmitting || selectedKeluarga.sts_hubungan === "3"}
                             variant="outlined" fullWidth error={error.kd_ibukandung ? true : false}>
 
                             <Select
-                                disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3" || selectedKeluarga.kd_ibukandung == "0"}
+                                disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3"}
                                 id="kd_ibukandung"
                                 value={selectedKeluarga.sts_hubungan == "3" ? (selectedKeluarga.kd_ibukandung || '0') : ''}
                                 onChange={handleChange}

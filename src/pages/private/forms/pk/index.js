@@ -146,6 +146,8 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
             if(isSingle){
                 if(subformIndex===18){
                     setSubFormIndex(index => index - 2);
+                } else {
+                    setSubFormIndex(index => index - 1);
                 }
             } else {
                 setSubFormIndex(index => index - 1);

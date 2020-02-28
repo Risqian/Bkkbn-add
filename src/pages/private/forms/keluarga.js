@@ -602,7 +602,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                                     })
                                 }
 
-                                {/* jika halaman pertamanya belum kawin maka yg tampil di halaman ke dua dan seterusnya harus lain2(karna belum punya istri/anak) */}
+                                {/* jika halaman pertamanya belum kawin maka yg tampil di halaman ke dua dan seterusnya anak dan lain2 */}
                                 {
                                     keluarga["01"].sts_kawin === "1" && id >= "02" && 
                                     itemHubungan.map((val, index) => {

@@ -52,7 +52,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
     const [isSubmitting, setSubmitting] = useState(false);
 
-    const itemHubungan = ['istri', 'anak', 'lain-lain']
+    const itemHubungan = ['Anak', 'Lain-lain']
 
     const itemKeberadaan = ['Di Dalam Rumah', 'Di Luar Rumah', 'Di Luar Negeri']
 
@@ -60,9 +60,6 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
     useEffect(() => {
         setError({})
     }, [id])
-
-
-
 
     const handleChange = (e) => {
         const { type, name, value } = e.target
@@ -116,12 +113,49 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
         }
 
+        if (keluarga["01"].jenis_kelamin==="1" && keluarga["01"].sts_kawin === "2" && id === "02") {
+            setKeluarga({
+                ...keluarga,
+                [id]: {
+                    ...keluarga[id],
+                    ["sts_hubungan"]: "2"
+                }
+            })
+
+        }
+
+        setKeluarga((prevState) => ({
+            ...prevState,
+            [id]: {
+                ...prevState[id],
+                [name]: value
+            }
+        }))
+
+        setError({
+            ...error,
+            [name]: ""
+        })
+
+        setSomethingChange(true)
+    }
+
+    const handleChangeJnsAsuransi = (e) => {
+        const { type, name, value } = e.target
+        if (type === "number") {
+            if (parseInt(value) < 0)
+                return false;
+
+            if (name === "nik" && value.length > 16) {
+                return false;
+            }
+        }
+
         if (id === "01" && wilayah.jumlah_keluarga === "1") {
             setKeluarga({
                 ...keluarga,
                 [id]: {
                     ...keluarga[id],
-                    ["sts_hubungan"]: "1",
                     ["keberadaan"]: "1"
                 }
             })
@@ -143,6 +177,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
         setSomethingChange(true)
     }
+
 
     const handleDateChange = name => newDate => {
 
@@ -521,36 +556,63 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <FormControl
-                            disabled={isSubmitting || id === "01"}
+                            disabled={isSubmitting || id === "01" || (keluarga["01"].jenis_kelamin === "1" && keluarga["01"].sts_kawin === "2" && id === "02")}
                             variant="outlined" fullWidth error={error.sts_hubungan ? true : false}>
 
                             <Select
                                 id="sts_hubungan"
-                                value={(selectedKeluarga.sts_hubungan || (id === "01" && "1")) || ""}
+                                value={(selectedKeluarga.sts_hubungan || (id === "01" && "1")) || (keluarga["01"].jenis_kelamin === "1" && keluarga["01"].sts_kawin === "2" && id === "02" && "2") || ""}
                                 onChange={handleChange}
                                 name="sts_hubungan"
                                 displayEmpty
                             >
                                 <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
+                                {/* default halaman pertama kepalakeluarga */}
                                 {
                                     id === "01" && <MenuItem value="1">Kepala Keluarga</MenuItem>
                                 }
+
+                                {/* jika halaman pertamanya seorang laki2 dan berstatus kawin maka default halaman ke duanya harus istri */}
                                 {
-                                    id > "01" &&
+                                    keluarga["01"].jenis_kelamin === "1" && keluarga["01"].sts_kawin === "2" && id === "02" && 
+                                    <MenuItem value="2">Istri</MenuItem>
+                                }
+
+                                {/* jika halaman keduanya default istri maka halaman seterusnya harus anak dan lain2 */}
+                                {
+                                    keluarga["01"].jenis_kelamin === "1" && keluarga["01"].sts_kawin === "2" && id > "02" &&
                                     itemHubungan.map((val, index) => {
-                                        return (<MenuItem value={`${index + 2}`}>{val}</MenuItem>)
+                                        return (<MenuItem value={`${index + 3}`}>{val}</MenuItem>)
                                     })
                                 }
 
-                                {/* <MenuItem value="">Hubungan Dengan Kepala Keluarga</MenuItem>
-                                <MenuItem value="1">Kepala Keluarga</MenuItem>
-                                <MenuItem value="2">Istri</MenuItem>
-                                <MenuItem value="3">Anak</MenuItem>
-                                <MenuItem value="4">Lain-lain</MenuItem> */}
+                                {/* jika halaman pertama seorang perempuan dan berstatus kawin halaman ke dua dan seterusnya harus anak dan lain2 */}
+                                {
+                                    keluarga["01"].jenis_kelamin === "2" && keluarga["01"].sts_kawin === "2" && id >= "02" && 
+                                    itemHubungan.map((val, index) => {
+                                        return (<MenuItem value={`${index + 3}`}>{val}</MenuItem>)
+                                    })
+                                }
+
+                                {/* jika halaman pertamanya cerai maka yg tampil di halaman ke dua dan seterusnya harus anak dan lain2 */}
+                                {
+                                    (keluarga["01"].sts_kawin === "3" || keluarga["01"].sts_kawin === "4") && id >= "02" &&
+                                    itemHubungan.map((val, index) => {
+                                        return (<MenuItem value={`${index + 3}`}>{val}</MenuItem>)
+                                    })
+                                }
+
+                                {/* jika halaman pertamanya belum kawin maka yg tampil di halaman ke dua dan seterusnya harus lain2(karna belum punya istri/anak) */}
+                                {
+                                    keluarga["01"].sts_kawin === "1" && id >= "02" && 
+                                    itemHubungan.map((val, index) => {
+                                        return (<MenuItem value={`${index + 3}`}>{val}</MenuItem>)
+                                    })
+                                }
+
                             </Select>
                             <FormHelperText>{error.sts_hubungan}</FormHelperText>
                         </FormControl>
-
                     </Grid>
                     {/* <Grid item xs={12} md={4}>
                         <FormControl
@@ -714,7 +776,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             <Select
                                 id="jns_asuransi"
                                 value={selectedKeluarga.jns_asuransi || ''}
-                                onChange={handleChangeStsAkta}
+                                onChange={handleChangeJnsAsuransi}
                                 name="jns_asuransi"
                                 displayEmpty
                             >

@@ -101,7 +101,17 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         });
         setTimeout(() => {
 
-            setSubFormIndex(index => index + 1);
+            if(isSingle){
+                if(subformIndex === 16){
+                    setSubFormIndex(index => index +2);
+                } else {
+                    setSubFormIndex(index => index +1);
+                }
+            } else {
+                setSubFormIndex(index => index +1);
+            }
+
+            
             setSlide({
                 direction: "left",
                 in: true
@@ -134,7 +144,14 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         });
         setTimeout(() => {
 
-            setSubFormIndex(index => index - 1);
+            if(isSingle){
+                if(subformIndex===18){
+                    setSubFormIndex(index => index - 2);
+                }
+            } else {
+                setSubFormIndex(index => index - 1);
+            }
+
             setSlide({
                 direction: "right",
                 in: true
@@ -225,14 +242,6 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
     const form = subforms[no];
     const value = pk[no];
 
-    // By Me
-    if (isSingle) {
-        if (navigationMode === "back") {
-            handleBackSub()
-        }
-    }
-    //
-
     //console.log(form, value, pk)
     return (<>
         <Swipeable
@@ -279,6 +288,9 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
                                             subformIndex={subformIndex}
                                             form={form}
                                             keluarga={keluarga}
+                                            setIsSingle={setIsSingle}
+                                            isSingle={isSingle}
+                                            subformIndex={subformIndex}
 
                                         />
                                     }

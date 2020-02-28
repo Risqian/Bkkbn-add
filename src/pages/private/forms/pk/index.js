@@ -79,8 +79,7 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         // By Me 
         // Kondisi ketija satu rumah hanya terdiri 1 orang
         if (isSingle) {
-            setPK(initialPK)
-            setNormalizePK(initialPK)
+           
             setSubFormIndex(16)
         }
         //

@@ -23,6 +23,7 @@ import subforms from './questions.json';
 // subforms
 import SubFormRadio from './subforms/radio';
 import SubFormNumber from './subforms/number';
+import SubFormNumber26 from './subforms/number_26';
 import SubformCheckbox from './subforms/checkbox';
 import SubFormRadio2 from './subforms/subformradio';
 import SubFormRadio18 from './subforms/subformradio_18';
@@ -79,7 +80,7 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         // By Me 
         // Kondisi ketija satu rumah hanya terdiri 1 orang
         if (isSingle) {
-           
+
             setSubFormIndex(16)
         }
         //
@@ -100,17 +101,17 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         });
         setTimeout(() => {
 
-            if(isSingle){
-                if(subformIndex === 16){
-                    setSubFormIndex(index => index +2);
+            if (isSingle) {
+                if (subformIndex === 16) {
+                    setSubFormIndex(index => index + 2);
                 } else {
-                    setSubFormIndex(index => index +1);
+                    setSubFormIndex(index => index + 1);
                 }
             } else {
-                setSubFormIndex(index => index +1);
+            setSubFormIndex(index => index + 1);
             }
 
-            
+
             setSlide({
                 direction: "left",
                 in: true
@@ -143,14 +144,14 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         });
         setTimeout(() => {
 
-            if(isSingle){
-                if(subformIndex===18){
+            if (isSingle) {
+                if (subformIndex === 18) {
                     setSubFormIndex(index => index - 2);
                 } else {
                     setSubFormIndex(index => index - 1);
                 }
             } else {
-                setSubFormIndex(index => index - 1);
+            setSubFormIndex(index => index - 1);
             }
 
             setSlide({
@@ -298,6 +299,23 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
 
                                     {form.tipe === 'number' &&
                                         <SubFormNumber
+                                            id={no}
+                                            value={value}
+                                            setValue={setValue}
+                                            saveValue={saveValue}
+                                            kb={kb}
+                                            handleNextSub={handleNextSub}
+                                            handleBackSub={handleBackSub}
+                                            navigationMode={navigationMode}
+                                            subformIndex={subformIndex}
+                                            form={form}
+                                            keluarga={keluarga}
+                                            wilayah={wilayah}
+                                        />
+                                    }
+
+                                    {form.tipe === 'number_26' &&
+                                        <SubFormNumber26
                                             id={no}
                                             value={value}
                                             setValue={setValue}

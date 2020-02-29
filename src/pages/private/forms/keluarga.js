@@ -151,6 +151,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
             }
         }
 
+        //jika hanya 1 orang langsung default keberadaan di dalam rumah
         if (id === "01" && wilayah.jumlah_keluarga === "1") {
             setKeluarga({
                 ...keluarga,
@@ -273,7 +274,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                 newError.usia_kawin = "Usia Kawin Pertama wajib diisi";
             } else if (parseInt(selectedKeluarga.usia_kawin) < 10) {
                 newError.usia_kawin = "Usia Kawin Pertama tidak boleh diisi < 10";
-            } else if (selectedKeluarga.tgl_lahir && parseInt(selectedKeluarga.usia_kawin) >= countAge(selectedKeluarga.tgl_lahir)) {
+            } else if (selectedKeluarga.tgl_lahir && parseInt(selectedKeluarga.usia_kawin) >= countAge(selectedKeluarga.tgl_lahir)+1) {
                 newError.usia_kawin = "Usia Kawin Pertama tidak boleh lebih besar dari umur";
             }
 
@@ -376,7 +377,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                 }
             }}
         >
-            <form onSubmit={handleSubmit} className={classes.form}>
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <ScrollToTopWithoutRouter />
                 <Grid container spacing={3}>
 
@@ -388,7 +389,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                     <Grid item xs={12}>
                         <Divider />
                     </Grid>
-                    <Grid item xs={2} md={2}>
+                    <Grid item xs={4} md={2}>
                         <TextField
                             disabled={isSubmitting}
                             fullWidth
@@ -403,7 +404,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             disabled
                         />
                     </Grid>
-                    <Grid item xs={10} md={5}>
+                    <Grid item xs={8} md={5}>
                         <TextField
                             disabled={isSubmitting}
                             fullWidth
@@ -791,7 +792,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <FormControl
+                    <FormControl
                             disabled={isSubmitting || wilayah.jumlah_keluarga === "1"}
                             variant="outlined" fullWidth error={error.keberadaan ? true : false}>
 

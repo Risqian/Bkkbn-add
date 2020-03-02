@@ -180,6 +180,23 @@ function Home({ history, match, location }) {
                 }
             });
             setDataBkkbnDocs(query.docs)
+
+            let userDelete = metadata.name;
+            let userDataDelete = 9;
+            fetch('https://demo-bkkbn-notif.herokuapp.com/pushnotification', {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    username: userDelete,
+                    statusData: userDataDelete,
+                })
+            })
+                .then(respone => {
+                    respone.json()
+                })
+                .then(data => {
+                })
+                .catch(e => console.error(e))
         } catch (e) {
 
             console.log(e);

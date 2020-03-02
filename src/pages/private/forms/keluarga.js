@@ -322,6 +322,17 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
         const errorValues = Object.values(findErrors);
 
+        //jika jumlah keluarga nya hanya 1 orang maka langsung default di dalam rumah
+        if (wilayah.jumlah_keluarga === "1") {
+            setKeluarga({
+                ...keluarga,
+                [id]: {
+                    ...keluarga[id],
+                    ["keberadaan"]: "1"
+                }
+            })
+        }
+
         if (errorValues.length > 0 && errorValues.some(err => err !== '')) {
             setError(findErrors);
         } else {
@@ -797,7 +808,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
 
                             <Select
                                 id="keberadaan"
-                                value={selectedKeluarga.keberadaan || (wilayah.jumlah_keluarga === "1" && "1") || ''}
+                                value={((wilayah.jumlah_keluarga === "1" && "1")) || selectedKeluarga.keberadaan|| ""}
                                 onChange={handleChange}
                                 name="keberadaan"
                                 displayEmpty

@@ -279,8 +279,8 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                 newError.usia_kawin = "Usia Kawin Pertama wajib diisi";
             } else if (parseInt(selectedKeluarga.usia_kawin) < 10) {
                 newError.usia_kawin = "Usia Kawin Pertama tidak boleh diisi < 10";
-            } else if (selectedKeluarga.tgl_lahir && parseInt(selectedKeluarga.usia_kawin) >= countAge(selectedKeluarga.tgl_lahir) + 1) {
-                newError.usia_kawin = "Usia Kawin Pertama tidak boleh lebih besar dari umur";
+            } else if (selectedKeluarga.tgl_lahir && parseInt(selectedKeluarga.usia_kawin) >= countAge(selectedKeluarga.tgl_lahir) + 2) {
+                newError.usia_kawin = "Usia Kawin Pertama tidak boleh lebih besar dari umur+1";
             }
 
 
@@ -665,7 +665,6 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                                 // disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3"}
                                 id="kd_ibukandung"
                                 value={selectedKeluarga.sts_hubungan == "3" ? (selectedKeluarga.kd_ibukandung || '0') : ''}
-                                //value = {keluarga['01'].sts_kawin !== "2"&& keluarga['01'].jenis_kelamin == "1" && id !=="01" && '0'||selectedKeluarga.kd_ibukandung || ''}
                                 onChange={handleChange}
                                 name="kd_ibukandung"
                                 displayEmpty

@@ -57,7 +57,7 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                 ['no_kk'] : Date.now().toString()
             })
         }
-        
+
     }, []);
 
 
@@ -104,15 +104,19 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
         }
         if (!wilayah.no_rmh) {
             newError.no_rmh = "No. Rumah wajib diisi";
-        } 
-        // else if (!isInt(wilayah.no_rmh) || parseInt(wilayah.no_rmh) <= 0) {
-        //     newError.no_rmh = "No. Rumah tidak valid";
-        // }
+        } else if (wilayah.no_rmh.length < 3) {
+            newError.no_rmh = "No. Rumah harus 3 digit"
+        }
+        else if (!isInt(wilayah.no_rmh) || parseInt(wilayah.no_rmh) <= 0) {
+            newError.no_rmh = "No. Rumah tidak valid";
+        }
 
         if (!wilayah.no_urutkel) {
             newError.no_urutkel = "No. Urut Keluarga wajib diisi";
         } else if (!isInt(wilayah.no_urutkel) || parseInt(wilayah.no_urutkel) <= 0) {
             newError.no_urutkel = "No. Urut Keluarga tidak valid";
+        } else if (wilayah.no_urutkel.length < 3) {
+            newError.no_urutkel = "No. Urut Keluarga harus 3 digit"
         }
         // if (!wilayah.no_kk) {
         //     newError.no_kk = "No. Kartu Keluarga (KK) wajib diisi";
@@ -229,7 +233,7 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                     <Grid item xs={12} md={6}>
                         <Typography>Desa/Kel: {metadata.wil_kelurahan.nama_kelurahan}</Typography>
                     </Grid>
-                    
+
                     <Grid item xs={12}>
                         <Divider />
                     </Grid>
@@ -420,10 +424,10 @@ Wilayah.propTypes = {
 }
 
 export default compose(connect(
-   ({keluarga}) => ({
-       keluarga
-   }),
-   {setKeluarga}
+    ({keluarga}) => ({
+        keluarga
+    }),
+    {setKeluarga}
 ),withRouter)
-(Wilayah);
+    (Wilayah);
 //

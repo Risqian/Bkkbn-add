@@ -52,7 +52,6 @@ function Home({ history, match, location }) {
     const { enqueueSnackbar } = useSnackbar()
     const [statusSensus, setStatusSensus] = useState('');
     const params = useParams();
-    const [resultStatus, setResultStatus] = useState([])
 
     useEffect(() => {
         let didCancel = false;
@@ -108,7 +107,7 @@ function Home({ history, match, location }) {
         //     fields: ['status_sensus']
         // })
         // const status = [... new Set(statuss.docs.map((val) => val.status_sensus))]
-        setResultStatus(status)
+        setStatus(status)
 
         if (queryParams.query) {
 
@@ -213,18 +212,29 @@ function Home({ history, match, location }) {
     }
 
     const handleSensus = async (event) => {
-        setStatusSensus(event.target.value);
-        const query = await dataBkkbn.local.find({
-            selector: {
-                user_name: { $eq: metadata.name },
-                status_sensus: event.target.value
+        const {value} = event.target
+        setStatusSensus((oldValue) => oldValue === value ? oldValue:value);
+        if (value === "all") {
+            const getAllDataBkkbn = async () => {
+                const query = await dataBkkbn.local.find({
+                    selector: {
+                        user_name: { $eq: metadata.name }
+                    }
+                });
+                setDataBkkbnDocs(query.docs)
             }
-        });
-
-        setDataBkkbnDocs(query.docs)
+            getAllDataBkkbn();
+        } else {
+            const query = await dataBkkbn.local.find({
+                selector: {
+                    user_name: { $eq: metadata.name },
+                    status_sensus: event.target.value
+                }
+            });
+            setDataBkkbnDocs(query.docs)
+        }
 
     }
-
 
     return (
         <Container maxWidth="md" className={classes.container}>
@@ -245,9 +255,11 @@ function Home({ history, match, location }) {
                             onChange={handleSensus}
                             displayEmpty
                         >
-                            <MenuItem value="">Status Sensus</MenuItem>
-                            <MenuItem value="Valid">Valid  </MenuItem>
-                            <MenuItem value="NotValid">Not Valid  </MenuItem>
+                            <MenuItem value=""> Status Sensus </MenuItem>
+                            <MenuItem value="all"> All </MenuItem>
+                            <MenuItem value="Valid"> Valid </MenuItem>
+                            <MenuItem value="NotValid"> Not Valid </MenuItem>
+                            <MenuItem value="Anomali"> Anomali </MenuItem>
 
                             {/* {
                                 resultStatus.map((result) => {

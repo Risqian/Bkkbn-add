@@ -178,6 +178,44 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
         setSomethingChange(true)
     }
 
+    const handleChangeHubungan = (e) => {
+        const { type, name, value } = e.target
+        if (type === "number") {
+            if (parseInt(value) < 0)
+                return false;
+
+            if (name === "nik" && value.length > 16) {
+                return false;
+            }
+        }
+
+        //kondisi jika memilih sts_hubungan anak dan tidak memiliki ibu maka value default 0
+        if (keluarga['01'].sts_hubungan == "1" && (keluarga['01'].sts_kawin == "3" || keluarga['01'].sts_kawin == "4") && keluarga['01'].jenis_kelamin == "1") {
+            setKeluarga({
+                ...keluarga,
+                [id]: {
+                    ...keluarga[id],
+                    ["kd_ibukandung"]: "0"
+                }
+            })
+        }
+
+        setKeluarga((prevState) => ({
+            ...prevState,
+            [id]: {
+                ...prevState[id],
+                [name]: value
+            }
+        }))
+
+        setError({
+            ...error,
+            [name]: ""
+        })
+
+        setSomethingChange(true)
+    }
+
 
     const handleDateChange = name => newDate => {
 
@@ -582,7 +620,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             <Select
                                 id="sts_hubungan"
                                 value={(selectedKeluarga.sts_hubungan || (id === "01" && "1")) || (keluarga["01"].jenis_kelamin === "1" && keluarga["01"].sts_kawin === "2" && id === "02" && "2") || ""}
-                                onChange={handleChange}
+                                onChange={handleChangeHubungan}
                                 name="sts_hubungan"
                                 displayEmpty
                             >

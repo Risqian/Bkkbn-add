@@ -304,8 +304,8 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
         else if (selectedKeluarga.sts_hubungan === "3" && selectedKeluarga.sts_kawin !== "1") {
             newError.sts_kawin = "Anak tidak boleh berstatus Kawin/Cerai";
         }
-        else if (selectedKeluarga.sts_hubungan === "4" && selectedKeluarga.sts_kawin !== "1") {
-            newError.sts_kawin = "Anggota keluarga lainnya tidak boleh berstatus Kawin/Cerai";
+        else if (selectedKeluarga.sts_hubungan === "4" && selectedKeluarga.sts_kawin === "2") {
+            newError.sts_kawin = "Anggota keluarga lainnya tidak boleh berstatus Kawin";
         }
         else if (selectedKeluarga.sts_kawin !== "1" && countAge(selectedKeluarga.tgl_lahir) < 10) {
             newError.sts_kawin = "Status Kawin, Cerai Hidup/Mati tidak boleh berusia < 10 Tahun";

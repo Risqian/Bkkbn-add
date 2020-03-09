@@ -125,7 +125,7 @@ export default function EditForm() {
                     setKB(data_bkkbn);
                     let newkb = {};
                     for (let i = 0; i < data_kb.length; i++) {
-                        let no_tes = 13
+                        let no_tes = parseInt(data_kb[i]._id) - 4
                         let qid = ''
 
                         if (Object.keys(data_kb[i]).length === 0) {
@@ -158,7 +158,7 @@ export default function EditForm() {
                     setPK(data_bkkbn);
                     let newpk = {};
                     for (let i = 0; i < data_pk.length; i++) {
-                        let no_tes = 13
+                        let no_tes = parseInt(data_pk[i]._id) - 4
                         let qid = ''
 
                         if (Object.keys(data_pk[i]).length === 0) {

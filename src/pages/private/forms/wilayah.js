@@ -50,16 +50,18 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
 
     const [isSubmitting, setSubmitting] = useState(false);
 
+    // PERUBAHAN AMBIL YANG RT RW BKKBN
     useEffect(() => {
         if(!wilayah.hasOwnProperty('no_kk')){
             setWilayah({
                 ...wilayah,
-                ['no_kk'] : Date.now().toString()
+                // ['no_kk'] : Date.now().toString()
+                // ['no_kk'] : `${metadata.wil_provinsi.id_provinsi}${metadata.wil_kabupaten.id_kabupaten}${metadata.wil_kecamatan.id_kecamatan}${metadata.wil_kelurahan.id_kelurahan}`
             })
         }
 
     }, []);
-
+    // END PERUBAHAN AMBIL YANG RT RW BKKBN
 
     const handleChange = (e) => {
 
@@ -166,6 +168,14 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                 //     ...wilayah
                 // })
 
+                setWilayah({
+                    ...wilayah,
+                    // ['no_kk'] : Date.now().toString()
+                    ['no_kk'] : `${metadata.wil_provinsi.id_provinsi_depdagri}${metadata.wil_kabupaten.id_kabupaten_depdagri}${metadata.wil_kecamatan.id_kecamatan_depdagri}${metadata.wil_kelurahan.id_kelurahan_depdagri}${wilayah.id_rw}${wilayah.id_rt}${wilayah.no_rmh}${wilayah.no_urutkel}`
+                })
+
+                console.log(wilayah.no_kk)
+
                 setSomethingChange(false);
                 handleNext()
 
@@ -250,7 +260,8 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                                 displayEmpty
                             >
                                 <MenuItem value="">Pilih RW/Dusun</MenuItem>
-                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw} value={rw.id_rw}>{rw.nama_rw}</MenuItem>)}
+                                {/* {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw} value={rw.id_rw}>{rw.nama_rw}</MenuItem>)} */}
+                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw_bkkbn} value={rw.id_rw_bkkbn}>{rw.nama_rw}</MenuItem>)}
                             </Select>
                             <FormHelperText>{error.id_rw}</FormHelperText>
                         </FormControl>
@@ -269,7 +280,7 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                             >
                                 <MenuItem value="">Pilih RT</MenuItem>
                                 {wilayah.id_rw &&
-                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt} value={rt.id_rt}>{rt.nama_rt}</MenuItem>)}
+                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw_bkkbn) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt_bkkbn} value={rt.id_rt_bkkbn}>{rt.nama_rt}</MenuItem>)}
 
 
                             </Select>

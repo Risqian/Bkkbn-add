@@ -93,7 +93,8 @@ function Finish({ wilayah, keluarga, normalizePK, normalizeKB, resetForm, mode, 
     const saveTo = target => async (e) => {
         // put data utama to KK
         const dataKKUtama = {
-            _id: wilayah.no_kk,
+            // _id: wilayah.no_kk,
+            _id: `${Date.now().toString()}${metadata.name}`,
 
             user_name: metadata.name,
             id_prov: parseInt(metadata.wil_provinsi.id_provinsi),

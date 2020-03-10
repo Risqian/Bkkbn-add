@@ -107,8 +107,13 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         setTimeout(() => {
 
             if (isSingle) {
-                if (subformIndex === 16) {
-                    setSubFormIndex(index => index + 2);
+                let tgl_lahir = keluarga['01'].tgl_lahir
+                if (countAge(tgl_lahir) >= 60) {
+                    if (subformIndex === 16) {
+                        setSubFormIndex(index => index + 2);
+                    } else {
+                        setSubFormIndex(index => index + 1);
+                    }
                 } else {
                     setSubFormIndex(index => index + 1);
                 }
@@ -136,8 +141,11 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
 
         // By Me
         if (isSingle) {
-            if (subformIndex === 16) {
-                return handleBack()
+            let tgl_lahir = keluarga['01'].tgl_lahir
+            if (countAge(tgl_lahir) >= 60) {
+                if (subformIndex === 16) {
+                    return handleBack()
+                }
             }
         }
         //
@@ -150,8 +158,13 @@ function PK({ wilayah, keluarga, kb, pk, mainSlide, setPK, handleNext, handleBac
         setTimeout(() => {
 
             if (isSingle) {
-                if (subformIndex === 18) {
-                    setSubFormIndex(index => index - 2);
+                let tgl_lahir = keluarga['01'].tgl_lahir
+                if (countAge(tgl_lahir) >= 60) {
+                    if (subformIndex === 18) {
+                        setSubFormIndex(index => index - 2);
+                    } else {
+                        setSubFormIndex(index => index - 1);
+                    }
                 } else {
                     setSubFormIndex(index => index - 1);
                 }

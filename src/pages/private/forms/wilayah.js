@@ -260,8 +260,8 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                                 displayEmpty
                             >
                                 <MenuItem value="">Pilih RW/Dusun</MenuItem>
-                                {/* {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw} value={rw.id_rw}>{rw.nama_rw}</MenuItem>)} */}
-                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw_bkkbn} value={rw.id_rw_bkkbn}>{rw.nama_rw}</MenuItem>)}
+                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw} value={rw.id_rw}>{rw.nama_rw}</MenuItem>)}
+                                {/* {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw_bkkbn} value={rw.id_rw_bkkbn}>{rw.nama_rw}</MenuItem>)} */}
                             </Select>
                             <FormHelperText>{error.id_rw}</FormHelperText>
                         </FormControl>
@@ -280,7 +280,8 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                             >
                                 <MenuItem value="">Pilih RT</MenuItem>
                                 {wilayah.id_rw &&
-                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw_bkkbn) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt_bkkbn} value={rt.id_rt_bkkbn}>{rt.nama_rt}</MenuItem>)}
+                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt} value={rt.id_rt}>{rt.nama_rt}</MenuItem>)}
+                                    {/* metadata.wil_rw.find(rw => parseInt(rw.id_rw_bkkbn) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt_bkkbn} value={rt.id_rt_bkkbn}>{rt.nama_rt}</MenuItem>)} */}
 
 
                             </Select>

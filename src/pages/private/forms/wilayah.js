@@ -52,7 +52,7 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
 
     // PERUBAHAN AMBIL YANG RT RW BKKBN
     useEffect(() => {
-        if(!wilayah.hasOwnProperty('no_kk')){
+        if (!wilayah.hasOwnProperty('no_kk')) {
             setWilayah({
                 ...wilayah,
                 // ['no_kk'] : Date.now().toString()
@@ -97,12 +97,12 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
     const validate = () => {
         let newError = {};
 
-        if (!wilayah.id_rw_bkkbn) {
-            newError.id_rw_bkkbn = "RW/Dusun wajib diisi";
+        if (!wilayah.id_rw) {
+            newError.id_rw = "RW/Dusun wajib diisi";
         }
 
-        if (!wilayah.id_rt_bkkbn) {
-            newError.id_rt_bkkbn = "RT wajib diisi";
+        if (!wilayah.id_rt) {
+            newError.id_rt = "RT wajib diisi";
         }
         if (!wilayah.no_rmh) {
             newError.no_rmh = "No. Rumah wajib diisi";
@@ -168,9 +168,15 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                 //     ...wilayah
                 // })
 
+                // init rw and rt
+                let id_rw_bkkbn = metadata.wil_rw.find(rw => parseInt(rw.id_rw) === parseInt(wilayah.id_rw)).id_rw_bkkbn
+                let id_rt_bkkbn = metadata.wil_rw.find(rw => parseInt(rw.id_rw) === parseInt(wilayah.id_rw)).wil_rt.find(rt => parseInt(rt.id_rt) === parseInt(wilayah.id_rt)).id_rt_bkkbn
+
                 setWilayah({
                     ...wilayah,
-                    ['no_kk'] : `${metadata.wil_provinsi.id_provinsi_depdagri}${metadata.wil_kabupaten.id_kabupaten_depdagri}${metadata.wil_kecamatan.id_kecamatan_depdagri}${metadata.wil_kelurahan.id_kelurahan_depdagri}${wilayah.id_rw_bkkbn}${wilayah.id_rt_bkkbn}${wilayah.no_rmh}${wilayah.no_urutkel}`
+                    ['id_rw_bkkbn'] : `${id_rw_bkkbn}`,
+                    ['id_rt_bkkbn'] : `${id_rt_bkkbn}`,
+                    ['no_kk']: `${metadata.wil_provinsi.id_provinsi_depdagri}${metadata.wil_kabupaten.id_kabupaten_depdagri}${metadata.wil_kecamatan.id_kecamatan_depdagri}${metadata.wil_kelurahan.id_kelurahan_depdagri}${id_rw_bkkbn}${id_rt_bkkbn}${wilayah.no_rmh}${wilayah.no_urutkel}`
                 })
 
                 console.log(wilayah.no_kk)
@@ -251,41 +257,41 @@ function Wilayah({ wilayah, setWilayah, handleNext, mode, setKeluarga, keluarga,
                     <Grid item xs={12} md={4}>
                         <FormControl
                             disabled={isSubmitting}
-                            variant="outlined" fullWidth error={error.id_rw_bkkbn ? true : false}>
+                            variant="outlined" fullWidth error={error.id_rw ? true : false}>
 
                             <Select
-                                id="id_rw_bkkbn"
-                                value={wilayah.id_rw_bkkbn || ''}
+                                id="id_rw"
+                                value={wilayah.id_rw || ''}
                                 onChange={handleChange}
-                                name="id_rw_bkkbn"
+                                name="id_rw"
                                 displayEmpty
                             >
                                 <MenuItem value="">Pilih RW/Dusun</MenuItem>
-                                
-                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw_bkkbn} value={rw.id_rw_bkkbn}>{rw.nama_rw}</MenuItem>)}
+
+                                {metadata.wil_rw.map(rw => <MenuItem key={rw.id_rw} value={rw.id_rw}>{rw.nama_rw}</MenuItem>)}
                             </Select>
-                            <FormHelperText>{error.id_rw_bkkbn}</FormHelperText>
+                            <FormHelperText>{error.id_rw}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <FormControl
-                            disabled={isSubmitting || !wilayah.id_rw_bkkbn}
-                            variant="outlined" fullWidth error={error.id_rt_bkkbn ? true : false}>
+                            disabled={isSubmitting || !wilayah.id_rw}
+                            variant="outlined" fullWidth error={error.id_rt ? true : false}>
 
                             <Select
-                                id="id_rt_bkkbn"
-                                value={wilayah.id_rt_bkkbn || ''}
+                                id="id_rt"
+                                value={wilayah.id_rt || ''}
                                 onChange={handleChange}
-                                name="id_rt_bkkbn"
+                                name="id_rt"
                                 displayEmpty
                             >
                                 <MenuItem value="">Pilih RT</MenuItem>
-                                {wilayah.id_rw_bkkbn &&
-                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw_bkkbn) === parseInt(wilayah.id_rw_bkkbn)).wil_rt.map(rt => <MenuItem key={rt.id_rt_bkkbn} value={rt.id_rt_bkkbn}>{rt.nama_rt}</MenuItem>)}
+                                {wilayah.id_rw &&
+                                    metadata.wil_rw.find(rw => parseInt(rw.id_rw) === parseInt(wilayah.id_rw)).wil_rt.map(rt => <MenuItem key={rt.id_rt} value={rt.id_rt}>{rt.nama_rt}</MenuItem>)}
 
 
                             </Select>
-                            <FormHelperText>{error.id_rt_bkkbn}</FormHelperText>
+                            <FormHelperText>{error.id_rt}</FormHelperText>
                         </FormControl>
 
                     </Grid>
@@ -436,10 +442,10 @@ Wilayah.propTypes = {
 }
 
 export default compose(connect(
-    ({keluarga}) => ({
+    ({ keluarga }) => ({
         keluarga
     }),
-    {setKeluarga}
-),withRouter)
+    { setKeluarga }
+), withRouter)
     (Wilayah);
 //

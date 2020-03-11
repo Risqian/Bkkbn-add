@@ -96,7 +96,8 @@ function Home({ history, match, location }) {
             return {
                 ...findKepala,
                 no_kk: kkDoc.no_kk,
-                status_sensus: kkDoc.status_sensus
+                status_sensus: kkDoc.status_sensus,
+                _id : kkDoc._id
             }
         })
 
@@ -122,19 +123,19 @@ function Home({ history, match, location }) {
 
 
 
-    const deleteKel = no_kk => async (e) => {
+    const deleteKel = _id => async (e) => {
         if (!window.confirm("Kamu yakin ingin menghapus data ini?")) {
             return false
         }
         setDeleting(true)
         try {
             //remove from local
-            const kkDoc = await dataBkkbn.local.get(no_kk);
+            const kkDoc = await dataBkkbn.local.get(_id);
             await dataBkkbn.local.put({ ...kkDoc, _deleted: true });
 
             const kbQuery = await dataBkkbn.local.find({
                 selector: {
-                    No_KK: { $eq: no_kk }
+                    _id: { $eq: _id }
                 }
             })
             if (kbQuery.docs.length > 0)
@@ -143,7 +144,7 @@ function Home({ history, match, location }) {
 
             const pkQuery = await dataBkkbn.local.find({
                 selector: {
-                    No_KK: { $eq: no_kk }
+                    _id: { $eq: _id }
                 }
             })
             if (pkQuery.docs.length > 0)
@@ -302,13 +303,13 @@ function Home({ history, match, location }) {
                                 <ListItemSecondaryAction>
                                     <IconButton
                                         disabled={isDeleting}
-                                        component={Link} to={`form/edit/${kepala.no_kk}`} edge="end" aria-label="edit">
+                                        component={Link} to={`form/edit/${kepala._id}`} edge="end" aria-label="edit">
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton
                                         disabled={isDeleting}
                                         edge="end" aria-label="delete"
-                                        onClick={deleteKel(kepala.no_kk)}
+                                        onClick={deleteKel(kepala._id)}
                                     >
                                         <DeleteIcon />
                                     </IconButton>

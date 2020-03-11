@@ -281,7 +281,7 @@ export default function Private({ history, match, location }) {
 
                     <Switch>
                         <Route exact path="/form" component={Form} />
-                        <Route path="/form/edit/:no_kk" component={EditForm} />
+                        <Route path="/form/edit/:_id" component={EditForm} />
                         <Route path="/list" component={List} />
                         <Route path="/definisi-operasional" component={DefOP} />
                         <Route component={Home} />

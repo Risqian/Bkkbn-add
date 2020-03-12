@@ -702,7 +702,13 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             <Select
                                 // disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3"}
                                 id="kd_ibukandung"
-                                value={selectedKeluarga.sts_hubungan == "3" ? (selectedKeluarga.kd_ibukandung || '0') : ''}
+                                value={(selectedKeluarga.sts_hubungan == "3" && keluarga["02"].sts_hubungan === "2") ?
+                                    selectedKeluarga.kd_ibukandung :
+                                    (selectedKeluarga.sts_hubungan == "3" && keluarga["01"].jenis_kelamin === "2") ?
+                                        selectedKeluarga.kd_ibukandung :
+                                        (selectedKeluarga.sts_hubungan == "3" && keluarga["01"].jenis_kelamin === "1") ?
+                                            '0' : ''
+                                }
                                 onChange={handleChange}
                                 name="kd_ibukandung"
                                 displayEmpty
@@ -729,6 +735,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                                         }
                                     })
                                 }
+                                <MenuItem value="0">00</MenuItem>
 
 
 

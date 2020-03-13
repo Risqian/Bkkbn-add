@@ -95,7 +95,7 @@ function Home({ history, match, location }) {
             }
             return {
                 ...findKepala,
-                no_kk: kkDoc.no_kk,
+                // no_kk: kkDoc.no_kk,
                 status_sensus: kkDoc.status_sensus,
                 _id : kkDoc._id
             }
@@ -285,7 +285,7 @@ function Home({ history, match, location }) {
                 <Grid item xs={12} >
                     <List>
                         {kepalaKels.map((kepala) => {
-                            return <ListItem divider key={kepala.no_kk}>
+                            return <ListItem divider key={kepala._id}>
                                 {/* {
                                     statusSensus == "valid" &&
                                 } */}

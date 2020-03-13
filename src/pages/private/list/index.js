@@ -183,10 +183,12 @@ function Home({ history, match, location }) {
 
             let userDelete = metadata.name;
             let userDataDelete = 9;
-            fetch('https://demo-bkkbn-notif.herokuapp.com/pushnotification', {
+            let id = _id;
+            fetch('http://push-web-notification-service-bkkbn-dev.apps.openshift4.ogya-rnd.com/api/v1/pushnotification', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({
+                    _id: id,
                     username: userDelete,
                     statusData: userDataDelete,
                 })

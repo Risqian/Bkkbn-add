@@ -234,7 +234,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
             newError.nama_anggotakel = "Nama Lengkap wajib diisi";
         }
 
-        if (!selectedKeluarga.nama_anggotakel.match(/^[a-zA-Z\.]+$/)) {
+        if (!selectedKeluarga.nama_anggotakel.match(/^[a-zA-Z\.\ ]+$/)) {
             newError.nama_anggotakel = "Nama tidak boleh mengandung Angka & Symbol";
         }
 
@@ -703,7 +703,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
                             disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3"}
                             variant="outlined" fullWidth error={error.kd_ibukandung ? true : false}>
 
-                            [16.43, 13/3/2020] Nabila Carolina Ogya: <Select
+                            <Select
                                 // disabled={isSubmitting || selectedKeluarga.sts_hubungan !== "3"}
                                 id="kd_ibukandung"
                                 value={(selectedKeluarga.sts_hubungan == "3" && keluarga["02"].sts_hubungan === "2") ?

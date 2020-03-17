@@ -47,7 +47,7 @@ export const renderDataKK = (metadata, wilayah) => {
 
             </Grid>
                 <Grid item xs={12} md={4}>
-                    <Typography>No. Telephone: {wilayah.no_telepon}</Typography>
+                    <Typography>Nomor Kontak Keluarga: {wilayah.no_kontak_keluarga}</Typography>
 
                 </Grid>
             <Grid item xs={12} md={4}>

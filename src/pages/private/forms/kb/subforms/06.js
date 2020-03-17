@@ -94,13 +94,13 @@ function SubForm06({ id, setValue, saveValue, value, kb, handleNextSub, navigati
             newError.alasan_tidak_kb = "Wajib diisi";
         }
 
-        if (value.alasan_tidak_kb === "13") {
-            if (!value.alasan_tidak_kb_lainnya) {
-                newError.alasan_tidak_kb_lainnya = "Lainnya wajib diisi";
-            }
+        // if (value.alasan_tidak_kb === "13") {
+        //     if (!value.alasan_tidak_kb_lainnya) {
+        //         newError.alasan_tidak_kb_lainnya = "Lainnya wajib diisi";
+        //     }
 
 
-        }
+        // }
 
 
         return newError;
@@ -212,7 +212,7 @@ function SubForm06({ id, setValue, saveValue, value, kb, handleNextSub, navigati
                                     <FormControlLabel control={<Radio />}
                                         value="13"
                                         label="Infertilitas/Menopause" />
-                                    {value.alasan_tidak_kb === "13" &&
+                                    {/* {value.alasan_tidak_kb === "13" &&
 
                                         <TextField
                                             fullWidth
@@ -229,7 +229,7 @@ function SubForm06({ id, setValue, saveValue, value, kb, handleNextSub, navigati
                                                 className: classes.inputMini
                                             }}
 
-                                        />}
+                                        />} */}
                                 </div>
                             </RadioGroup>
 

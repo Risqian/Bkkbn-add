@@ -57,11 +57,10 @@
     "0205": {
         "no": "05",
         "pertanyaan": "Selama 6 (enam) bulan terakhir, setiap anggota keluarga makan “makanan beragam” (makanan pokok, sayur/buah dan lauk) paling sedikit 2 (dua) kali sehari",
-        "tipe": "subformradio_5",
+        "tipe": "radio",
         "options": [
             "Ya",
-            "Tidak",
-            "Tidak Berlaku"
+            "Tidak"
         ],
         "dependencies": [],
         "unit": "",

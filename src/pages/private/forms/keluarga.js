@@ -345,7 +345,7 @@ function Keluarga({ wilayah, id, keluarga, setKeluarga, handleNext, handleBack, 
         if (!selectedKeluarga.id_pekerjaan) {
             newError.id_pekerjaan = "Pekerjaan wajib diisi";
         }
-        else if (selectedKeluarga.id_pekerjaan !== "1" && countAge(selectedKeluarga.tgl_lahir) < 10) {
+        else if (selectedKeluarga.id_pekerjaan !== "1" && countAge(selectedKeluarga.tgl_lahir) <= 10) {
             newError.id_pekerjaan = "Usia pekerja tidak boleh < 10 tahun";
         }
 
